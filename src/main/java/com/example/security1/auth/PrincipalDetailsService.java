@@ -2,7 +2,6 @@ package com.example.security1.auth;
 
 import com.example.security1.model.User;
 import com.example.security1.repository.UserRepository;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -22,10 +21,11 @@ public class PrincipalDetailsService implements UserDetailsService {
     }
 
     // 시큐리티 session(내부 Authentication(내부 UserDetails))
+    // 함수 종료 시 @AuthenticationPrincipal 애노테이션이 만들어진다.
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         final User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new IllegalArgumentException("회원정보 없어"));
+                .orElseThrow(() -> new IllegalArgumentException("회원정보 없습니다."));
 
         return new PrincipalDetails(user);
     }
